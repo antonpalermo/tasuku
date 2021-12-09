@@ -1,56 +1,16 @@
-import { ApolloServer, gql } from 'apollo-server'
+import 'reflect-metadata'
 
-const typeDefs = gql`
-  type Query {
-    hello: String!
-  }
+import { buildSchema } from 'type-graphql'
+import { ApolloServer } from 'apollo-server'
 
-  type Error {
-    field: String
-    message: String
-  }
+const main = async () => {
+  const apollo = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [`${__dirname}/resolvers/**/*.ts`],
+    }),
+  })
 
-  type Task {
-    id: ID
-    name: String
-    isComplete: Boolean
-  }
-
-  type TaskResponse {
-    errors: [Error]
-    task: Task
-  }
-
-  input TaskDetails {
-    id: ID
-    name: String
-    isComplete: Boolean
-  }
-
-  type Mutation {
-    createTask(task: TaskDetails!): TaskResponse
-  }
-`
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello World',
-  },
-
-  Mutation: {
-    createTask: () => {
-      return {
-        errors: null,
-        task: {
-          id: 1,
-          name: 'Create a sample todo-app',
-          isCompleted: false,
-        },
-      }
-    },
-  },
+  apollo.listen().then(({ url }) => console.log(`server started on ${url}`))
 }
 
-const server = new ApolloServer({ typeDefs, resolvers })
-
-server.listen().then(({ url }) => console.log(`Server started on ${url}`))
+main().catch((e) => console.log(e))

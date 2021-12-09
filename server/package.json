@@ -2,7 +2,7 @@
   "private": "true",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "",
+    "dev": "tsnd --respawn --notify false --prefer-ts --ignore-watch node_modules -- ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,10 +12,13 @@
     "@types/node": "^16.11.12",
     "apollo-server": "^3.5.0",
     "graphql": "^15.8.0",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^10.4.0",
+    "type-graphql": "^1.1.1",
     "typescript": "^4.5.2"
   },
   "devDependencies": {
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "ts-node-dev": "^1.1.8"
   }
 }
