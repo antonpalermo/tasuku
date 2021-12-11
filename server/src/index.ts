@@ -1,9 +1,11 @@
+import 'dotenv/config'
 import 'reflect-metadata'
 
 import http from 'http'
 import express from 'express'
 
 import { buildSchema } from 'type-graphql'
+import { createConnection } from 'typeorm'
 import { execute, subscribe } from 'graphql'
 import { ApolloServer } from 'apollo-server-express'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
@@ -46,6 +48,9 @@ const main = async () => {
     }
   )
 
+  const conn = await createConnection()
+
+  await conn.runMigrations()
   await apollo.start()
 
   apollo.applyMiddleware({ app, path: '/' })

@@ -4,9 +4,9 @@ import { Task } from './task'
 
 @ObjectType()
 export class TaskResult {
-  @Field(() => [Error])
-  errors: Error[]
+  @Field(() => [Error], { nullable: true })
+  errors?: Error[]
 
-  @Field(() => Task)
-  task: Task
+  @Field(() => Task, { nullable: true })
+  task?: Task
 }

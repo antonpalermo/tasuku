@@ -9,5 +9,11 @@ export class Task {
   name: string
 
   @Field(() => Boolean)
-  isCompleted: boolean
+  isComplete: boolean
+
+  @Field()
+  dateCreated: Date
+
+  @Field()
+  dateUpdated: Date
 }
