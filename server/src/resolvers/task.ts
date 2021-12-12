@@ -33,8 +33,6 @@ export class TaskResolver {
       .where('id = :id', { id })
       .getOne()
 
-    console.log(result)
-
     if (!result) {
       return {
         errors: [
