@@ -1,5 +1,6 @@
 import {
   Arg,
+  Args,
   Mutation,
   Publisher,
   PubSub,
@@ -13,8 +14,8 @@ import { TaskInput } from '../schemas/taskInput'
 import { TaskResult } from '../schemas/taskResult'
 
 import { Task as TaskEntity } from '../entities/task.entity'
+import { TaskNotification } from '../schemas/taskNotification'
 
-const ON_TASK_CHANGE = 'ON_TASK_CHANGE'
 const ON_TASK_CREATE = 'ON_TASK_CREATE'
 const ON_TASK_UPDATE = 'ON_TASK_UPDATE'
 const ON_TASK_DELETE = 'ON_TASK_DELETE'
@@ -103,9 +104,6 @@ export class TaskResolver {
       .execute()
 
     await publish({ ...updatedTask })
-
-    console.log(updatedTask)
-
     return updatedTask
   }
 
@@ -129,9 +127,12 @@ export class TaskResolver {
   }
 
   @Subscription({
-    topics: [ON_TASK_CREATE, ON_TASK_UPDATE, ON_TASK_DELETE],
+    topics: [ON_TASK_CREATE],
   })
-  on(@Root() payload: Task): Task {
-    return payload
+  onCreate(@Root() payload: Task): TaskNotification {
+    return {
+      task: payload,
+      message: 'Username created a new Task',
+    }
   }
 }
