@@ -1,42 +1,20 @@
 import { gql, useQuery, useSubscription } from '@apollo/client'
 import { useEffect, useState } from 'react'
+import {
+  useGetAllTasksQuery,
+  useOnCreateTaskSubscription,
+} from '../generated/graphql'
 
 const Home = () => {
-  const FETCH_POST = gql`
-    query Tasks {
-      tasks {
-        id
-        name
-        isComplete
-        dateCreated
-        dateUpdated
-      }
-    }
-  `
-
-  const ON_CREATE = gql`
-    subscription Subscription {
-      onCreate {
-        task {
-          id
-          name
-          isComplete
-          dateCreated
-          dateUpdated
-        }
-        message
-      }
-    }
-  `
-
   const [tasks, setTasks] = useState<any[]>()
-  const { loading } = useQuery(FETCH_POST, {
-    onCompleted: (data) => setTasks(data?.tasks),
-  })
 
-  useSubscription(ON_CREATE, {
+  useOnCreateTaskSubscription({
     onSubscriptionData: ({ subscriptionData: { data } }) =>
       setTasks((old: any) => [...old, data?.onCreate.task]),
+  })
+
+  const { loading } = useGetAllTasksQuery({
+    onCompleted: (data) => setTasks(data?.tasks),
   })
 
   if (loading) {

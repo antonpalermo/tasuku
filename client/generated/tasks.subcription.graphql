@@ -1,0 +1,11 @@
+subscription onCreateTask {
+  onCreate {
+    task {
+      id
+      name
+      isComplete
+      dateCreated
+      dateUpdated
+    }
+  }
+}

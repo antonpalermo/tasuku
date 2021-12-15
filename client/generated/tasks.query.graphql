@@ -1,0 +1,9 @@
+query getAllTasks {
+  tasks {
+    id
+    name
+    isComplete
+    dateCreated
+    dateUpdated
+  }
+}
