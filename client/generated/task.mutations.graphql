@@ -1,0 +1,34 @@
+mutation createTask($details: TaskInput!) {
+  create(details: $details) {
+    errors {
+      message
+    }
+    task {
+      id
+      name
+      isComplete
+      dateCreated
+      dateUpdated
+    }
+  }
+}
+
+mutation updateTask($task: TaskInput!, $updateId: String!) {
+  update(task: $task, id: $updateId) {
+    id
+    name
+    isComplete
+    dateCreated
+    dateUpdated
+  }
+}
+
+mutation deleteTask($deleteId: String!) {
+  delete(id: $deleteId) {
+    id
+    name
+    isComplete
+    dateCreated
+    dateUpdated
+  }
+}

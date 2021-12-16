@@ -5,6 +5,8 @@ import {
   useOnCreateTaskSubscription,
 } from '../generated/graphql'
 
+import TaskForm from '../components/TaskForm'
+
 const Home = () => {
   const [tasks, setTasks] = useState<any[]>()
 
@@ -24,6 +26,7 @@ const Home = () => {
   return (
     <div>
       <h1>Home Components</h1>
+      <TaskForm />
       <div>
         {tasks?.map((x: any) => (
           <div key={x.id}>
