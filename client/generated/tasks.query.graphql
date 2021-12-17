@@ -7,3 +7,18 @@ query getAllTasks {
     dateUpdated
   }
 }
+
+query getTask($taskId: String!) {
+  task(id: $taskId) {
+    errors {
+      message
+    }
+    task {
+      id
+      name
+      isComplete
+      dateCreated
+      dateUpdated
+    }
+  }
+}
