@@ -1,12 +1,12 @@
-import { gql, useQuery, useSubscription } from '@apollo/client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   useGetAllTasksQuery,
   useOnCreateTaskSubscription,
 } from '../generated/graphql'
 
-import TaskForm from '../components/TaskForm'
+import CreateForm from '../components/CreateForm'
+import Task from '../components/Task'
 
 const Home = () => {
   const router = useRouter()
@@ -28,11 +28,11 @@ const Home = () => {
   return (
     <div>
       <h1>Home Components</h1>
-      <TaskForm />
+      <CreateForm />
       <div>
         {tasks?.map((x: any) => (
           <div key={x.id}>
-            <h2>{x.name}</h2>
+            <Task id={x.id} title={x.name} isComplete={x.isComplete} />
             <button onClick={() => router.push(`/details?id=${x.id}`)}>
               View
             </button>

@@ -1,25 +1,20 @@
 import React from 'react'
-import { Formik, Form, Field, FormikHelpers } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import { useCreateTaskMutation } from '../generated/graphql'
 
 interface FormValue {
   name: string
 }
 
-const TaskForm = () => {
+const CreateForm = () => {
   const [createTask] = useCreateTaskMutation()
 
   const initialValue: FormValue = {
     name: '',
   }
 
-  const onFormSubmit = async (
-    { name }: FormValue,
-    { setSubmitting }: FormikHelpers<FormValue>
-  ) => {
-    setSubmitting(true)
+  const onFormSubmit = async ({ name }: FormValue) => {
     await createTask({ variables: { details: { name } } })
-    setSubmitting(false)
   }
 
   return (
@@ -38,4 +33,4 @@ const TaskForm = () => {
   )
 }
 
-export default TaskForm
+export default CreateForm
